@@ -1,0 +1,66 @@
+apiVersion: 1
+
+groups:
+  - orgId: 1
+    name: order-tracker
+    folder: Order Tracker
+    interval: 10s
+    rules:
+      - uid: order-tracker-5xx
+        title: Server errors (5xx)
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 600
+              to: 0
+            datasourceUid: prometheus
+            model:
+              refId: A
+              instant: true
+              # 5xx responses per endpoint in the last 5 minutes.
+              expr: sum by (http_route) (increase(http_server_request_duration_seconds_count{job="order-tracker", http_response_status_code=~"5.."}[5m])) > 0
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: A
+              conditions:
+                - evaluator:
+                    type: gt
+                    params: [0]
+        # No 5xx responses means the query returns nothing: that is the healthy state.
+        noDataState: OK
+        execErrState: Error
+        for: 0s
+        labels:
+          service: order-tracker
+          severity: critical
+        annotations:
+          summary: Order Tracker is returning server errors (5xx)
+          description: "{{ if $values.A }}{{ printf \"%.0f\" $values.A.Value }} server error(s) on endpoint {{ $labels.http_route }} in the last 5 minutes.{{ else }}No server errors in the last 5 minutes.{{ end }}"
+          endpoint: "{{ if $labels.http_route }}{{ $labels.http_route }}{{ else }}none{{ end }}"
+          time_window: 5m
+          dashboard_url: http://localhost:3000/d/order-tracker
+          __dashboardUid__: order-tracker
+          __panelId__: "4"
+
+contactPoints:
+  - orgId: 1
+    name: incident-responder
+    receivers:
+      - uid: incident-responder
+        type: webhook
+        disableResolveMessage: true
+        settings:
+          url: http://host.docker.internal:8001/alerts
+          httpMethod: POST
+
+policies:
+  - orgId: 1
+    receiver: incident-responder
+    group_by: [alertname, http_route]
+    group_wait: 10s
+    group_interval: 1m
+    repeat_interval: 4h
