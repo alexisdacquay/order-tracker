@@ -1,0 +1,64 @@
+{
+  "receiver": "incident-responder",
+  "status": "firing",
+  "alerts": [
+    {
+      "status": "firing",
+      "labels": {
+        "alertname": "Server errors (5xx)",
+        "grafana_folder": "Order Tracker",
+        "http_route": "/api/orders/{order_id}",
+        "service": "order-tracker",
+        "severity": "critical"
+      },
+      "annotations": {
+        "dashboard_url": "http://localhost:3000/d/order-tracker",
+        "description": "2 server error(s) on endpoint /api/orders/{order_id} in the last 5 minutes.",
+        "endpoint": "/api/orders/{order_id}",
+        "summary": "Order Tracker is returning server errors (5xx)",
+        "time_window": "5m"
+      },
+      "startsAt": "2026-10-03T19:16:50Z",
+      "endsAt": "0001-01-01T00:00:00Z",
+      "generatorURL": "http://localhost:3000/alerting/grafana/order-tracker-5xx/view?orgId=1",
+      "fingerprint": "015fddca5487e906",
+      "silenceURL": "http://localhost:3000/alerting/silence/new?alertmanager=grafana&matcher=__alert_rule_uid__%3Dorder-tracker-5xx&matcher=http_route%3D%2Fapi%2Forders%2F%7Border_id%7D&matcher=service%3Dorder-tracker&matcher=severity%3Dcritical&orgId=1",
+      "dashboardURL": "http://localhost:3000/d/order-tracker?from=1791051410000&orgId=1&to=1791055020070",
+      "panelURL": "http://localhost:3000/d/order-tracker?from=1791051410000&orgId=1&to=1791055020070&viewPanel=4",
+      "ruleUID": "order-tracker-5xx",
+      "values": {
+        "A": 1.5,
+        "C": 1
+      },
+      "valueString": "[ var='A' labels={http_route=/api/orders/{order_id}} type='query' value=1.5 ], [ var='C' labels={http_route=/api/orders/{order_id}} type='threshold' value=1 ]",
+      "orgId": 1
+    }
+  ],
+  "groupLabels": {
+    "alertname": "Server errors (5xx)",
+    "http_route": "/api/orders/{order_id}"
+  },
+  "commonLabels": {
+    "alertname": "Server errors (5xx)",
+    "grafana_folder": "Order Tracker",
+    "http_route": "/api/orders/{order_id}",
+    "service": "order-tracker",
+    "severity": "critical"
+  },
+  "commonAnnotations": {
+    "dashboard_url": "http://localhost:3000/d/order-tracker",
+    "description": "2 server error(s) on endpoint /api/orders/{order_id} in the last 5 minutes.",
+    "endpoint": "/api/orders/{order_id}",
+    "summary": "Order Tracker is returning server errors (5xx)",
+    "time_window": "5m"
+  },
+  "externalURL": "http://localhost:3000/",
+  "appVersion": "13.2.3",
+  "version": "1",
+  "groupKey": "{}:{alertname=\"Server errors (5xx)\", http_route=\"/api/orders/{order_id}\"}",
+  "truncatedAlerts": 0,
+  "orgId": 1,
+  "title": "[FIRING:1] Server errors (5xx) /api/orders/{order_id} (Order Tracker order-tracker critical)",
+  "state": "alerting",
+  "message": "**Firing**\n\nValue: A=1.5, C=1\nLabels:\n - alertname = Server errors (5xx)\n - grafana_folder = Order Tracker\n - http_route = /api/orders/{order_id}\n - service = order-tracker\n - severity = critical\nAnnotations:\n - dashboard_url = http://localhost:3000/d/order-tracker\n - description = 2 server error(s) on endpoint /api/orders/{order_id} in the last 5 minutes.\n - endpoint = /api/orders/{order_id}\n - summary = Order Tracker is returning server errors (5xx)\n - time_window = 5m\nSource: http://localhost:3000/alerting/grafana/order-tracker-5xx/view?orgId=1\nSilence: http://localhost:3000/alerting/silence/new?alertmanager=grafana&matcher=__alert_rule_uid__%3Dorder-tracker-5xx&matcher=http_route%3D%2Fapi%2Forders%2F%7Border_id%7D&matcher=service%3Dorder-tracker&matcher=severity%3Dcritical&orgId=1\nDashboard: http://localhost:3000/d/order-tracker?from=1791051410000&orgId=1&to=1791055020070\nPanel: http://localhost:3000/d/order-tracker?from=1791051410000&orgId=1&to=1791055020070&viewPanel=4\n"
+}

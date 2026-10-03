@@ -1,0 +1,1 @@
+RESULT: Root cause was `placed_at.replace(day=placed_at.day + 2)` in `app/main.py:65`, which raises `ValueError` when the day overflows the month. Fixed by using `placed_at + timedelta(days=2)`. All tests pass (including new regression test for month-end dates) and the live request to `/api/orders/express-1002` now returns 200.
